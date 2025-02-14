@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     @vite('resources/css/index.css')
+    <title>index</title>
+</head>
+<body>
+    <div class="container">
+        <div class="user-info-container">
+            <span id="login-info">로그인되지 않음</span>
+            <button type="button" id="login" class="login-btn">로그인</button>
+        </div>
+        <div class="button-container">
+            <button id="board" class="button">글쓰기</button>
+        </div>
+    </div>
+    <script>
+
+    </script>
+    <!--
+    <script type="text/javascript" src="/static/js/index_page.js"></script>
+    <script type="text/javascript" src="/static/js/index_page_event.js"></script>
+    -->
+</body>
+</html>
