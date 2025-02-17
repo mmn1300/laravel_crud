@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Write Post</title>
-    @vite('resources/css/write_post.css')
+    <link rel="stylesheet" type="text/css" href="/css/write_post.css">
 </head>
 <body>
     <div class="container">

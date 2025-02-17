@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     @vite('resources/css/index.css')
     <title>index</title>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
 </head>
 <body>
     <div class="container">
@@ -20,8 +20,8 @@
 
     </script>
     <!--
-    <script type="text/javascript" src="/static/js/index_page.js"></script>
-    <script type="text/javascript" src="/static/js/index_page_event.js"></script>
+    <script type="text/javascript" src="/js/index_page.js"></script>
+    <script type="text/javascript" src="/js/index_page_event.js"></script>
     -->
 </body>
 </html>

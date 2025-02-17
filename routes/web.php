@@ -7,6 +7,16 @@ Route::get('/', function () {
     return view('boards/index');
 }); 
 
+// index -> 로그인
+Route::get('/login', function () {
+    return view('boards/login_form');
+}); 
+
+// index -> 로그인 -> 회원 가입
+Route::get('/login/signup', function () {
+    return view('boards/create_account');
+}); 
+
 // index -> 게시판
 Route::get('/post', function () {
     return view('boards/posts_list');

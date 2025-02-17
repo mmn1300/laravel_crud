@@ -6,10 +6,6 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css', 'resources/js/app.js',
-                'resources/css/index.css',
-                'resources/css/posts_list.css',
-                'resources/css/write_post.css',
-                'resources/css/read_post.css'
             ],
             refresh: true,
         }),

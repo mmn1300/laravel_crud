@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts List</title>
-    @vite('resources/css/posts_list.css')
+    <link rel="stylesheet" type="text/css" href="/css/posts_list.css">
 </head>
 <body>
     <div class="container">
@@ -25,120 +25,17 @@
                     <th width="10%"></th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- 아래 행 16개 생성 -->
+            <tbody id="post-content">
+                <!-- 아래 행 16개 생성
                 <tr class="table-row">
                     <td class="post-number"></td>
                     <td class="post-title"></td>
                     <td class="post-user"></td>
                     <td class="post-update"></td>
                     <td class="post-delete"></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="table-row">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                </tr> 
+                -->
+
                 <tr class="table-row-last">
                     <td colspan=3 id="search-space">
                         <input type="text" id="search" value="">
@@ -152,5 +49,7 @@
             </tbody>
         </table>
     </div>
+    <script type="text/javascript" src="/js/posts_list_def.js"></script>
+    <script type="text/javascript" src="/js/posts_list.js"></script>
 </body>
 </html>
