@@ -14,7 +14,8 @@
         </div>
 
         <div class="login-container">
-            <form action="/login" method="POST" id="login-form">
+            <form action="/login/" method="POST" id="login-form">
+                @csrf
                 <table>
                     <thead>
                         <tr>
@@ -32,7 +33,7 @@
                         </tr>
                         <tr >
                             <td colspan="2">
-                                <a href="/account_form" id="create-account">회원가입</a>
+                                <a href="/login/signup" id="create-account">회원가입</a>
                             </td>
                         </tr>
                     </tbody>
@@ -40,6 +41,7 @@
             </form>
         </div>
     </div>
+    <script type="text/javascript" src="/js/login_form_def.js"></script>
     <script type="text/javascript" src="/js/login_form.js"></script>
 </body>
 </html>

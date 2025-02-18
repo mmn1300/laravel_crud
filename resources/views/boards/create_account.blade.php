@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     <link rel="stylesheet" type="text/css" href="/css/create_account.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="container">
@@ -21,12 +22,12 @@
                     <tbody>
                         <tr>
                             <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
-                            <td><input type="text" id="id" class="check-input" placeholder="아이디"></td>
+                            <td><input type="text" id="id" class="check-input" placeholder="아이디 15 글자 이하" maxlength="15"></td>
                             <td><button id="id-redundancy-check">중복 확인</button></td>
                         </tr>
                         <tr>
                             <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
-                            <td colspan="2"><input class="input" type="password" id="pw" placeholder="비밀번호"></td>
+                            <td colspan="2"><input class="input" type="password" id="pw" placeholder="비밀번호 15 글자 이하" maxlength="15"></td>
                         </tr>
                         <tr>
                             <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
@@ -49,27 +50,27 @@
                         <tr>
                             <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
                             <td colspan="2">
-                                <input class="email-input" type="text" id="email" placeholder="이메일">
+                                <input class="nickname-input" type="nickname" id="nickname" placeholder="닉네임 10 글자 이하" maxlength="10"><br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
+                            <td colspan="2">
+                                <input class="email-input" type="text" id="email" placeholder="이메일" maxlength="38">
                                 <span>@</span>
-                                <input class="email-input" id="email-domain" placeholder="도메인 주소">
+                                <input class="email-input" id="email-domain" placeholder="도메인 주소" maxlength="38">
                                 <br/>
                             </td>
                         </tr>
                         <tr>
                             <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
                             <td colspan="2">
-                                <input class="phone-input" type="text" id="phone" placeholder="전화번호">
+                                <input class="phone-input" type="text" id="phone" placeholder="휴대" maxlength="3">
                                 <span>-</span>
-                                <input class="phone-input" type="text" id="phone2" placeholder="전화번호">
+                                <input class="phone-input" type="text" id="phone2" placeholder="전화" maxlength="4">
                                 <span>-</span>
-                                <input class="phone-input" type="text" id="phone3" placeholder="전화번호">
+                                <input class="phone-input" type="text" id="phone3" placeholder="번호" maxlength="4">
                                 <br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="icon-cell-body"><img src="/img/unchecked.png" class="icon-img" width="18px" height="18px"></span></td>
-                            <td colspan="2">
-                                <input class="birthday-input" type="birthday" id="birthday" placeholder="생년월일 6자리"><br/>
                             </td>
                         </tr>
                     </tbody>
@@ -81,6 +82,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/create_account.js"></script>
+    <script type="text/javascript" src="/js/create_account_def.js"></script>
+    <script type="text/javascript" src="/js/create_account_event.js"></script>
 </body>
 </html>

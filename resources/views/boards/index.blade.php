@@ -19,9 +19,7 @@
     <script>
 
     </script>
-    <!--
-    <script type="text/javascript" src="/js/index_page.js"></script>
-    <script type="text/javascript" src="/js/index_page_event.js"></script>
-    -->
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/index_event.js"></script>
 </body>
 </html>
