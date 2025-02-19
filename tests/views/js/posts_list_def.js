@@ -60,9 +60,4 @@ async function checkLogin() {
     .catch((error) => {
         alert(`요청 중 에러가 발생했습니다.\n\n${error.message}`);
     });
-};
-
-// 게시글을 요청을 통해 받아 게시하는 함수
-const contentLoad = (pageNum) => {
-
-};
+}

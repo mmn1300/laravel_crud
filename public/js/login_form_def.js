@@ -1,4 +1,62 @@
-function login(){
+// 해당 아이디가 데이터베이스에 존재하는지 확인
+async function isIdExist(id){
+    return fetch('/login/id', {
+        method: 'POST',
+        dataType: 'json',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({id:id}),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP 오류. 상태코드: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(data["message"]){
+            return true;
+        }else{
+            return false;
+        }
+    })
+    .catch((error) => {
+        alert(`요청 중 에러가 발생했습니다.\n\n${error.message}`);
+    });
+}
+
+// 아이디와 비밀번호가 일치하는 계정이 있는지 확인
+async function idPwMatched(id,pw){
+    return fetch('/login/pw', {
+        method: 'POST',
+        dataType: 'json',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({id:id,pw:pw}),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP 오류. 상태코드: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(data["message"]){
+            return true;
+        }else{
+            return false;
+        }
+    })
+    .catch((error) => {
+        alert(`요청 중 에러가 발생했습니다.\n\n${error.message}`);
+    });
+}
+
+const login = () => {
     const id = document.querySelector('#id');
     const pw = document.querySelector('#password');
 
@@ -9,7 +67,7 @@ function login(){
     }else{
         isIdExist(id.value).then(result => {
             if(result){
-                isPwMatched(id.value, pw.value).then(result => {
+                idPwMatched(id.value, pw.value).then(result => {
                     if(result){
                         document.querySelector('#login-form').submit();
                         alert('로그인 되었습니다.')

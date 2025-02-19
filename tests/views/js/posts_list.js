@@ -1,41 +1,17 @@
-// <tr class="table-row">
-//     <td class="post-number"></td>
-//     <td class="post-title"></td>
-//     <td class="post-user"></td>
-//     <td class="post-update"></td>
-//     <td class="post-delete"></td>
-// </tr>
-const create_table_row = () => {
-    const tr = document.createElement('tr');
-    tr.className = 'table-row';
+document.addEventListener('DOMContentLoaded', () => {
+    // 게시글 칸 생성
+    const tbody = document.querySelector('#post-content');
+    for(let i=0; i<maxRow; i++){
+        tbody.prepend(create_table_row());
+    }
 
-    const tdNumber = document.createElement('td');
-    tdNumber.className = 'post-number';
-    tr.appendChild(tdNumber);
-
-    const tdTitle = document.createElement('td');
-    tdTitle.className = 'post-title';
-    tr.appendChild(tdTitle);
-
-    const tdUser = document.createElement('td');
-    tdUser.className = 'post-user';
-    tr.appendChild(tdUser);
-
-    const tdUpdate = document.createElement('td');
-    tdUpdate.className = 'post-update';
-    tr.appendChild(tdUpdate);
-
-    const tdDelete = document.createElement('td');
-    tdDelete.className = 'post-delete';
-    tr.appendChild(tdDelete);
-
-    return tr;
-};
-
-
-const tbody = document.querySelector('#post-content');
-// 한 페이지 당 최대 게시물 개수
-const maxRow = 16;
-for(let i=0; i<maxRow; i++){
-    tbody.prepend(create_table_row());
-}
+    // 사용자 로그인 상태 화면에 나타냄
+    // const loginState = document.querySelector('.login-state');
+    // checkLogin().then(response => {
+    //     if(response["message"]){
+    //         loginState.textContent = `${response['nickname']} 님 (${response['id'].slice(0,4)}****)`;
+    //     }else{
+    //         loginState.textContent = '로그인 되어있지 않음';
+    //     }
+    // });
+});

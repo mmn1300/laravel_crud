@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Write Post</title>
     <link rel="stylesheet" type="text/css" href="/css/write_post.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="container">
@@ -26,20 +27,24 @@
                 <div class="post-control">
                     <div class="user-info"><span id="user-info">사용자 정보</span></div>
                     <div class="draft-save"><button id="draft-save">임시 저장</button></div>
-                    <div class="submit"><button id="submit">게시하기</button></div>
+                    <div class="submit"><button id="submit" type="button">게시하기</button></div>
                 </div>
             </div>
 
             <!-- 중단 컨텐츠. 텍스트 영역 -->
             <div class="text-area">
-                <textarea></textarea>
+                <textarea id="content"></textarea>
             </div>
 
             <!-- 하단 컨텐츠. 파일 첨부 -->
             <div class="add-file">
-
+                <!-- <span id="add-file">파일 첨부</span>
+                <input type="file" id="file-upload" name="file"> -->
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="/js/write_post_def.js"></script>
+    <script type="text/javascript" src="/js/write_post.js"></script>
+    <script type="text/javascript" src="/js/write_post_event.js"></script>
 </body>
 </html>

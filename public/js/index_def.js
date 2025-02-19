@@ -1,9 +1,10 @@
+// 로그인이 되어있는지 확인. 요청을 통해 로그인 되어있다면 아이디와 닉네임을 불러옴
 async function checkLogin() {
     return fetch('/session', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            "X-CSRF-Token": document.querySelector('input[name=_token]').value
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
     .then(response => {
@@ -13,6 +14,9 @@ async function checkLogin() {
         return response.json();
     })
     .then(data => {
+        if(data['error'] !== undefined){
+            console.log(data['error']);
+        }
         return data;
     })
     .catch((error) => {

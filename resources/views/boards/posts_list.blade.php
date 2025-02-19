@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts List</title>
     <link rel="stylesheet" type="text/css" href="/css/posts_list.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="container">
@@ -12,6 +13,7 @@
         <div class="head-content">
             <div class="login-state">로그인 상태</div>
             <div class="home"><button class="home-button" id="home-button" type="button">홈</button></div>
+            <div class="write-post"><button id="write-post" type="button">글쓰기</button></div>
         </div>
 
         <!-- 메인 컨텐츠 -->
@@ -51,5 +53,6 @@
     </div>
     <script type="text/javascript" src="/js/posts_list_def.js"></script>
     <script type="text/javascript" src="/js/posts_list.js"></script>
+    <script type="text/javascript" src="/js/posts_list_event.js"></script>
 </body>
 </html>

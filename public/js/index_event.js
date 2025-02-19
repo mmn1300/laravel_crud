@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }else{
             fetch('/logout', {
                 method: 'DELETE',
+                dataType : 'json',
                 headers: {
                     'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector('input[name=_token]').value
+                    "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
             })
             .then(response => {
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                if(data["message"] === true){
+                if(data["message"]){
                     location.reload();
                 }else{
                     console.error(data['error']);

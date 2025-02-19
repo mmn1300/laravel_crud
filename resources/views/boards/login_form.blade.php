@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" type="text/css" href="/css/login_form.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="container">
@@ -14,7 +15,7 @@
         </div>
 
         <div class="login-container">
-            <form action="/login/" method="POST" id="login-form">
+            <form action="/login" method="POST" id="login-form">
                 @csrf
                 <table>
                     <thead>
@@ -42,6 +43,6 @@
         </div>
     </div>
     <script type="text/javascript" src="/js/login_form_def.js"></script>
-    <script type="text/javascript" src="/js/login_form.js"></script>
+    <script type="text/javascript" src="/js/login_form_event.js"></script>
 </body>
 </html>

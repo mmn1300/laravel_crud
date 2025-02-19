@@ -19,7 +19,7 @@ body {
 .head-content {
     border: 2px solid black;
     background-color: white;
-    width: 300px;
+    width: 400px;
     height: 30px;
     display: flex;
     justify-content: space-between;
@@ -28,18 +28,28 @@ body {
     right: 0%;
 }
 .login-state {
-    width: 82%;
+    width: 65%;
     font-weight: bolder;
     font-size: medium;
     border-right: 2px solid black;
 }
 .home {
-    width: 18%;
+    width: 15%;
+    border-right: 2px solid black;
 }
 .home-button {
     width: 90%;
     height: 100%;
     font-size: larger;
+    font-weight: bolder;
+}
+.write-post{
+    width: 20%;
+}
+#write-post{
+    width: 90%;
+    height: 100%;
+    font-size: medium;
     font-weight: bolder;
 }
 
