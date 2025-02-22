@@ -36,7 +36,15 @@ Route::get('/post/write', function (Request $request) {
     // 세션 유무 검사
     if($request->session()->has('code')){
         // 세션 존재시
-        return view('boards/write_post');
+        try{
+            $code = $request->session()->get('code');
+            $result = DB::select("SELECT nickname, id FROM members WHERE code=$code");
+            return view('boards/write_post', [
+                'user' => $result[0]->nickname.' ('.substr($result[0]->id, 0, 4).'****)',
+            ]);
+        }catch(Exception $e){
+            return view('boards/error', ["error" => $e->getMessage()]);
+        }
     }else{
         // 세션 미존재시
         return redirect()->route('login');
@@ -61,11 +69,15 @@ Route::get('/post/update/{postNum}', function (Request $request, $postNum) {
     if($request->session()->has('code')){
         // 세션 존재시
         try{
+            $code = $request->session()->get('code');
+            $result = DB::select("SELECT nickname, id FROM members WHERE code=$code");
+            $user = $result[0]->nickname.' ('.substr($result[0]->id, 0, 4).'****)';
             $result = DB::select("SELECT subject, content FROM posts WHERE number=$postNum");
             return view('boards/update_post', [
-                "number" => $request->session()->get('code'),
+                "number" => $postNum,
                 "title" => $result[0]->subject,
-                "content" => $result[0]->content
+                "content" => $result[0]->content,
+                "user" => $user
             ]);
         }catch(Exception $e){
             return view('boards/error', ["error" => $e->getMessage()]);
@@ -253,14 +265,14 @@ Route::get('/post/list/{page?}', function(Request $request, $page=1){
 });
 
 
-// index -> 게시판 -> 게시글 쓰기 -> 글쓰기, 임시저장
+// index -> 게시판 -> 게시글 쓰기 -> 글쓰기
 Route::post('/post/write', function(Request $request) {
     $code = $request->session()->get('code');
     $result = DB::select("SELECT id, nickname FROM members WHERE code=$code");
     $id = $result[0]->id;
     $nickname = $result[0]->nickname;
-    $subject = $request->input('title');
-    $content = $request->input('content');
+    $subject = $_POST['title'];
+    $content = $_POST['content'];
     $today = date("Y-m-d H:i:s");
     $view = 0;
 
@@ -271,13 +283,29 @@ Route::post('/post/write', function(Request $request) {
         $num = $num[0]->number + 1;
     }
 
-    try{
-        DB::insert("INSERT INTO posts VALUES ($num, '$id', '$nickname', '$subject', '$content', '$today', $view, '', '', '')");
-    }catch(Exception $e){
-        return response()->json(["message" => false, "error" => $e->getMessage()]);
+    if($request->hasFile('file')){
+        $newFileName = date("Y_m_d_H_i_s");
+    
+        // // /storage/app/private
+        $fileName = $request->file->getClientOriginalName();
+        $fileType = $request->file->extension();
+        $copiedFileName = $newFileName.'.'.$fileType;
+        $request->file->storeAs('', $copiedFileName);
+    }else{
+        $fileName = '';
+        $fileType = '';
+        $copiedFileName = '';
     }
-    return response()->json(["message" => true]);
-});
+    try{
+        DB::insert("INSERT INTO posts VALUES (
+            $num, '$id', '$nickname', '$subject', '$content', '$today', $view, '$fileName', '$fileType', '$copiedFileName'
+            )");
+        return redirect()->route('board');
+    }catch(Exception $e){
+        return view('boards/error', ['error' => $e->getMessage()]);
+    }
+
+})->name('write');
 
 // index -> 게시판 -> 게시글 읽기
 Route::get('/post/read/{number}', function (Request $request, $num) {
@@ -301,7 +329,7 @@ Route::get('/post/read/{number}', function (Request $request, $num) {
             return view('boards/read_post', [
                 'number' => $num,
                 'title' => $result[0]->subject,
-                'user' => $result[0]->nickname.' ('.substr($result[0]->id, 0, 4).'***)',
+                'user' => $result[0]->nickname.' ('.substr($result[0]->id, 0, 4).'****)',
                 'views' => $result[0]->view,
                 'recommends' => 0,
                 'regist_day' => $result[0]->regist_day,
@@ -315,23 +343,63 @@ Route::get('/post/read/{number}', function (Request $request, $num) {
     }
 }); 
 
+// index -> 게시판 -> 게시글 읽기-> 파일 존재 여부 확인
+Route::get('/post/check/{postNum}', function(Request $request, $postNum) {
+    try{
+        $result = DB::select("SELECT file_name FROM posts WHERE number=$postNum");
+        return response()->json(["message" => true, "fileName" => $result[0]->file_name]);
+    }catch(Exception $e){
+        return response()->json(["message" => true, "error" => $e->getMessage()]);
+    }
+});
+
+// index -> 게시판 -> 게시글 읽기-> 파일 다운로드
+Route::get('/post/download/{postNum}', function(Request $request, $postNum) {
+    try{
+        $result = DB::select("SELECT file_name, file_copied FROM posts WHERE number=$postNum");
+    
+        $fileName = $result[0]->file_name;
+        $copoedFileName = $result[0]->file_copied;
+        $filePath = storage_path('app\\private\\'.$copoedFileName);
+    
+        if($fileName != ''){
+            if(is_file($filePath) && file_exists($filePath)){
+                return response()->download($filePath, $fileName);
+            }
+        }
+    }catch(Exception $e){
+        return view('boards/error', ["error" => $e->getMessage()]);
+    }
+});
+
 // index -> 게시판 -> 게시글 읽기 -> 게시글 수정(view) -> 게시글 수정(model)
 Route::put('/post/update', function(Request $request) {
-    //
-    // 다른 글이 수정되는 오류 해결할 것
-    //
     $postNum = $request->input('number');
     $subject = $request->input('title');
     $content = $request->input('content');
     $today = date("Y-m-d H:i:s");
 
+    
     try{
-        DB::update("UPDATE posts SET subject='$subject', content='$content', regist_day='$today' WHERE number=$postNum");
-        return response()->json(["message" => true]);
+        if($request->hasFile('file')){
+            $newFileName = date("Y_m_d_H_i_s");
+        
+            // /storage/app/private
+            $fileName = $request->file->getClientOriginalName();
+            $fileType = $request->file->extension();
+            $copiedFileName = $newFileName.'.'.$fileType;
+            $request->file->storeAs('', $copiedFileName);
+            DB::update("UPDATE posts SET subject='$subject', content='$content', regist_day='$today',
+                                file_name='$fileName', file_type='$fileType', file_copied='$copiedFileName'
+                                WHERE number=$postNum");
+        }else{
+            DB::update("UPDATE posts SET subject='$subject', content='$content', regist_day='$today' WHERE number=$postNum");
+        }
+        return redirect('/post/read/'.$postNum);
     }catch(Exception $e){
-        return response()->json(["message" => false, "error" => $e->getMessage()]);
+        return view('boards/error', ["error" => $e->getMessage()]);
     }
-});
+})->name('update');
 
 // index -> 게시판 -> 게시글 읽기 -> 게시글 삭제
 Route::delete('/post/delete', function(Request $request) {
@@ -355,4 +423,9 @@ Route::delete('/post/delete', function(Request $request) {
         }
     }
     return response()->json(["message" => true]);
+    //
+    //
+    // 게시글 삭제할 때 서버에 남아있는 첨부 파일이 있으면 같이 삭제할 것
+    //
+    //
 });

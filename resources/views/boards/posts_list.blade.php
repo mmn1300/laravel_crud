@@ -43,7 +43,7 @@
                     </td>
                     <td colspan=2 id="page-space">
                         <button class="page-button" id="prev-page">&lt;</button>
-                        <input type="text" id="page-number" value="1" readonly>
+                        <span id="page-number">1</span>
                         <button class="page-button" id="next-page">&gt;</button>
                     </td>
                 </tr>

@@ -138,28 +138,16 @@ button{
     font-weight: bolder;
     transform: translateY(-50%);
 }
-.draft-save {
-    width: 60px;
+
+.submit-btn {
+    width: 120px;
     position: relative;
 }
-#draft-save {
-    position: absolute;
-    left: 15%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100%;
-    font-size: medium;
-    font-weight: bolder;
-}
-.submit {
-    width: 60px;
-    position: relative;
-}
-#submit {
+#submit-btn {
     position: absolute;
     left: 13%;
     transform: translateX(-50%);
-    width: 100px;
+    width: 200px;
     height: 100%;
     font-size: medium;
     font-weight: bolder;
@@ -174,4 +162,17 @@ button{
 textarea {
     width: 995px;
     height: 344px;
+}
+
+.add-file{
+    text-align: center;
+}
+#add-file{
+    font-size: larger;
+    font-weight: bolder;
+    padding-top: 10px;
+}
+#file-upload{
+    margin-top: 10px;
+    font-weight: bolder;
 }

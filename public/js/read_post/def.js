@@ -73,3 +73,56 @@ const deletePost = () => {
         alert(`요청 중 에러가 발생했습니다.\n\n${error.message}`);
     });
 };
+
+// 첨부된 파일이 있는지 확인
+async function fileExists(number){
+    return fetch(`/post/check/${number}`, {
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP 오류. 상태코드: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(data['message']){
+            return data['fileName'];
+        }else{
+            console.error(data['error']);
+        }
+    })
+    .catch((error) => {
+        alert(`요청 중 에러가 발생했습니다.\n\n${error.message}`);
+    });
+}
+
+// 파일 다운로드
+async function downloadFile(fileName, number) {
+    const response = await fetch(`/post/download/${number}`, {
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+
+    // 서버 응답으로부터 파일을 다운로드
+    const blob = await response.blob();
+
+    // 파일 다운로드를 위한 a 태그 생성
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.textContent = fileName;
+    a.className = 'file_download';
+    const fileContainer = document.querySelector('.file-container');
+    fileContainer.appendChild(a);
+};

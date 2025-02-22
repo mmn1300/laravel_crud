@@ -100,9 +100,10 @@ th {
     text-align: center;
     font-size: larger;
     font-weight: bolder;
-    width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 80px;
     height: 20px;
-    border: 1px solid black;
 }
 .post-title{
     text-align: start;

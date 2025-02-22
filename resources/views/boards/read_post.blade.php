@@ -27,8 +27,8 @@
                     </div>
                     <div class="post-control">
                         <div class="user-info"><span id="user-info">{{ $user }}</span></div>
-                        <div class="view-count"><span id="view-count">조회 수: {{ $views }}</span></div>
-                        <div class="recommend"><span id="recommend-count">추천 수: {{ $recommends }}</span></div>
+                        <!-- <div class="view-count"><span id="view-count">조회 수: {{ $views }}</span></div>
+                        <div class="recommend"><span id="recommend-count">추천 수: {{ $recommends }}</span></div> -->
                     </div>
                 </div>
             </div>

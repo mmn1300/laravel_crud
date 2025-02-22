@@ -104,8 +104,7 @@ button{
     justify-content: space-between;
 }
 .user-info {
-    width: 230px;
-    border-right: 1px solid black;
+    width: 500px;
     position: relative;
 }
 #user-info {
@@ -207,4 +206,7 @@ button{
 }
 #post-update{
     margin-right: 4px;
+}
+.file_download{
+    margin-right: 10px;
 }

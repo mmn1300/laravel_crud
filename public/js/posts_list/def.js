@@ -97,8 +97,10 @@ const contentLoad = (pageNum) => {
     })
     .then(data => {
         if(data['message']){
-            if(data["rows"] > 0 || data["rows"] <= 16){
+            if(data["rows"] > 0 && data["rows"] <= 16){
                 setPosts(data["posts"]);
+            }else if(data["rows"] === 0){
+                clearPost();
             }
         }else{
             console.error('요청 중 오류가 발생했습니다.', data["error"]);

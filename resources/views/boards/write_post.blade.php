@@ -19,28 +19,31 @@
         <!-- 메인 컨텐츠 -->
         <div class="main-content">
             <!-- 상단 컨텐츠. 제목, 로그인 정보, 임시저장 버튼, 게시하기 버튼 -->
-            <div class="post-info">
-                <div class="title">
-                    <span id="title">제목 : </span>
-                    <input type="text" name="title" id="title-input" value="" placeholder=" 제목을 입력해주세요.">
+            <form id="post-form" action="{{ route('write') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="post-info">
+                    <div class="title">
+                        <span id="title">제목 : </span>
+                        <input type="text" name="title" id="title-input" value="" placeholder=" 제목을 입력해주세요.">
+                    </div>
+                    <div class="post-control">
+                        <div class="user-info"><span id="user-info">{{ $user }}</span></div>
+                        <div class="submit-btn"><button id="submit-btn" type="button">게시하기</button></div>
+                    </div>
                 </div>
-                <div class="post-control">
-                    <div class="user-info"><span id="user-info">사용자 정보</span></div>
-                    <div class="draft-save"><button id="draft-save">임시 저장</button></div>
-                    <div class="submit"><button id="submit" type="button">게시하기</button></div>
+
+                <!-- 중단 컨텐츠. 텍스트 영역 -->
+                <div class="text-area">
+                    <textarea id="content" name="content"></textarea>
                 </div>
-            </div>
 
-            <!-- 중단 컨텐츠. 텍스트 영역 -->
-            <div class="text-area">
-                <textarea id="content"></textarea>
-            </div>
-
-            <!-- 하단 컨텐츠. 파일 첨부 -->
-            <div class="add-file">
-                <!-- <span id="add-file">파일 첨부</span>
-                <input type="file" id="file-upload" name="file"> -->
-            </div>
+                <!-- 하단 컨텐츠. 파일 첨부 -->
+                <div class="add-file">
+                    <span id="add-file">파일 첨부</span>
+                    <br/>
+                    <input type="file" id="file-upload" name="file">
+                </div>
+            </form>
         </div>
     </div>
     <script type="text/javascript" src="/js/write_post/def.js"></script>
