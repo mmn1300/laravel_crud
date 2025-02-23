@@ -7,6 +7,12 @@
 ---
 ### 화면 예시
 
+![메인 화면](https://github.com/mmn1300/laravel_crud/blob/main/index.png)
+![로그인](https://github.com/mmn1300/laravel_crud/blob/main/login.png)
+![회원가입](https://github.com/mmn1300/laravel_crud/blob/main/signup.png)
+![게시판](https://github.com/mmn1300/laravel_crud/blob/main/board.png)
+![글쓰기](https://github.com/mmn1300/laravel_crud/blob/main/write.png)
+![글읽기](https://github.com/mmn1300/laravel_crud/blob/main/read.png)
 
 ---
 
