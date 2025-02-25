@@ -39,10 +39,12 @@ class ViewController extends Controller
             try{
                 $code = $request->session()->get('code');
                 $result = DB::select("SELECT nickname, id FROM members WHERE code=$code");
+
                 return view('boards/write_post', [
                     'user' => $result[0]->nickname.' ('.substr($result[0]->id, 0, 4).'****)',
                 ]);
-            }catch(Exception $e){
+            }
+            catch(Exception $e){
                 return view('boards/error', ["error" => $e->getMessage()]);
             }
         }else{
@@ -71,13 +73,15 @@ class ViewController extends Controller
                 $result = DB::select("SELECT nickname, id FROM members WHERE code=$code");
                 $user = $result[0]->nickname.' ('.substr($result[0]->id, 0, 4).'****)';
                 $result = DB::select("SELECT subject, content FROM posts WHERE number=$postNum");
+                
                 return view('boards/update_post', [
                     "number" => $postNum,
                     "title" => $result[0]->subject,
                     "content" => $result[0]->content,
                     "user" => $user
                 ]);
-            }catch(Exception $e){
+            }
+            catch(Exception $e){
                 return view('boards/error', ["error" => $e->getMessage()]);
             }
         }else{

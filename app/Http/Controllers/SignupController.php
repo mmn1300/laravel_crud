@@ -9,19 +9,6 @@ use Exception;
 
 class SignupController extends Controller
 {
-    public function checkId(Request $request) {
-        $id = $request->input('id');
-
-        // DB 질의
-        $result = DB::select("SELECT 1 FROM members WHERE id='$id'");
-
-        // 결과 JSON 응답
-        if($result == null){
-            return response()->json(['message' => true]);
-        }else{
-            return response()->json(['message' => false]);
-        }
-    }
 
     public function signup(Request $request) {
         $request->validate([
@@ -45,10 +32,12 @@ class SignupController extends Controller
             $name = $request->input('name');
             $email = $request->input('email');
             $phone = $request->input('phone');
+            date_default_timezone_set('Asia/Seoul');
             $today = date("Y-m-d H:i:s");
     
             // 데이터 삽입
             DB::insert("INSERT INTO members VALUES ($num, '$id', '$pw', '$name', '$email', '$phone', '$today', 1)");
+
         }catch(Exception $e){
             return response()->json([
                 'message' => false,

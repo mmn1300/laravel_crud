@@ -26,7 +26,17 @@ async function checkLogin() {
 
 // 글을 작성하는 함수.
 function writePost() {
-    document.querySelector('#post-form').submit();
+    const title = document.querySelector('#title-input').value;
+    const content = document.querySelector('#content').value;
+    if(title.trim() !== ''){
+        if(content.trim() !== ''){
+            document.querySelector('#post-form').submit();
+        }else{
+            alert('내용을 입력해주세요.');
+        }
+    }else{
+        alert('제목을 입력해주세요.');
+    }
 };
 
 function getCurrentTime() {

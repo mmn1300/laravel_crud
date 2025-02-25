@@ -14,7 +14,6 @@ class SessionController extends Controller
         // 세션 검사
         if($request->session()->has('code')){
             // 결과 JSON 응답 (접속된 사용자 정보)
-            // { message(요청 처리 상태):bool, id:str, nickname:str }
             $code = $request->session()->get('code');
             try {
                 $result = DB::select("SELECT id, nickname FROM members WHERE code=$code");

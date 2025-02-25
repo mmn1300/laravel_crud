@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const number = parseInt(document.querySelector('.main-content').id);
     fileExists(number).then(fileName => {
+
+        // 첨부된 파일이 존재할때만 파일 다운로드
         if(fileName !==''){
             downloadFile(fileName, number);
         }

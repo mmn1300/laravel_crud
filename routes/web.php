@@ -7,8 +7,6 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 
 /*
@@ -23,16 +21,20 @@ use Illuminate\Support\Facades\DB;
 
 
 // index
-Route::get('/', [ViewController::class, 'index'])->name('index'); 
+Route::get('/', [ViewController::class, 'index'])
+->name('index'); 
 
 // index -> 로그인
-Route::get('/login', [ViewController::class, 'login'])->name('login'); 
+Route::get('/login', [ViewController::class, 'login'])
+->name('login'); 
 
 // index -> 로그인 -> 회원 가입
-Route::get('/login/signup', [ViewController::class, 'signup'])->name('signup'); 
+Route::get('/login/signup', [ViewController::class, 'signup'])
+->name('signup'); 
 
 // index -> 게시판
-Route::get('/board', [ViewController::class, 'board'])->name('board'); 
+Route::get('/board', [ViewController::class, 'board'])
+->name('board'); 
 
 // index -> 게시판 -> 게시글 쓰기
 Route::get('/post/write', [ViewController::class, 'writePost']); 
@@ -41,7 +43,8 @@ Route::get('/post/write', [ViewController::class, 'writePost']);
 Route::get('/post/read', [ViewController::class, 'readPost']); 
 
 // index -> 게시판 -> 게시글 쓰기 -> 게시글 수정
-Route::get('/post/update/{postNum}', [ViewController::class, 'updatePost']);
+Route::get('/post/update/{postNum}', [ViewController::class, 'updatePost'])
+->where('postNum', '[0-9]+');
 
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
@@ -63,28 +66,34 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::delete('/logout', [LoginController::class, 'logout']);
 
 // index -> 로그인 -> 회원가입 -> 아이디 중복 확인
-Route::post('/signup/id', [SignupController::class, 'checkId']);
+Route::post('/signup/id', [LoginController::class, 'checkId']);
 
 // index -> 로그인 -> 회원가입 -> 계정 생성
 Route::post('/signup', [SignupController::class, 'signup']);
 
 // index -> 게시판 -> 게시글 읽어오기
-Route::get('/post/list/{page?}', [BoardController::class, 'loadPosts']);
+Route::get('/post/list/{page?}', [BoardController::class, 'loadPosts'])
+->where('page', '[0-9]+');
 
 // index -> 게시판 -> 게시글 쓰기 -> 글쓰기
-Route::post('/post/write', [BoardController::class, 'writePost'])->name('write');
+Route::post('/post/write', [BoardController::class, 'writePost'])
+->name('write');
 
 // index -> 게시판 -> 게시글 읽기
-Route::get('/post/read/{number}', [BoardController::class, 'readPost']); 
+Route::get('/post/read/{postNum}', [BoardController::class, 'readPost'])
+->where('postNum', '[0-9]+');
 
 // index -> 게시판 -> 게시글 읽기-> 파일 존재 여부 확인
-Route::get('/post/check/{postNum}', [FileController::class, 'fileExists']);
+Route::get('/post/check/{postNum}', [FileController::class, 'fileExists'])
+->where('postNum', '[0-9]+');
 
 // index -> 게시판 -> 게시글 읽기-> 파일 다운로드
-Route::get('/post/download/{postNum}', [FileController::class, 'download']);
+Route::get('/post/download/{postNum}', [FileController::class, 'download'])
+->where('postNum', '[0-9]+');
 
 // index -> 게시판 -> 게시글 읽기 -> 게시글 수정(view) -> 게시글 수정(model)
-Route::put('/post/update', [BoardController::class, 'updatePost'])->name('update');
+Route::put('/post/update', [BoardController::class, 'updatePost'])
+->name('update');
 
 // index -> 게시판 -> 게시글 읽기 -> 게시글 삭제
 Route::delete('/post/delete', [BoardController::class, 'deletePost']);

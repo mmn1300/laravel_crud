@@ -26,7 +26,17 @@ async function checkLogin() {
 
 // 게시글을 수정하는 비동기 요청 함수
 const updatePost = () => {
-    document.querySelector('#post-form').submit();
+    const title = document.querySelector('#title-input').value;
+    const content = document.querySelector('#content').value;
+    if(title.trim() !== ''){
+        if(content.trim() !== ''){
+            document.querySelector('#post-form').submit();
+        }else{
+            alert('내용을 입력해주세요.');
+        }
+    }else{
+        alert('제목을 입력해주세요.');
+    }
 };
 
 function getCurrentTime() {
