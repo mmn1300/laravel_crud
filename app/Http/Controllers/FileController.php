@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post;
 use Exception;
 
 
@@ -11,8 +12,10 @@ class FileController extends Controller
 {
     public function fileExists($postNum) {
         try{
-            $result = DB::select("SELECT file_name FROM posts WHERE number=$postNum");
-            return response()->json(["message" => true, "fileName" => $result[0]->file_name]);
+            $result = Post::where('number', $postNum)
+            ->get(['file_name'])
+            ->first();
+            return response()->json(["message" => true, "fileName" => $result->file_name]);
         }
         catch(Exception $e){
             return response()->json(["message" => false, "error" => $e->getMessage()]);
@@ -22,10 +25,12 @@ class FileController extends Controller
 
     public function download($postNum) {
         try{
-            $result = DB::select("SELECT file_name, file_copied FROM posts WHERE number=$postNum");
-        
-            $fileName = $result[0]->file_name;
-            $copoedFileName = $result[0]->file_copied;
+            $result = Post::where('number', $postNum)
+            ->get(['file_name', 'file_copied'])
+            ->first();
+
+            $fileName = $result->file_name;
+            $copoedFileName = $result->file_copied;
             $filePath = storage_path('app\\private\\'.$copoedFileName); // 절대 경로
         
             if($fileName != ''){

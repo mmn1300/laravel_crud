@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Member;
 use Exception;
 
 
@@ -16,9 +17,11 @@ class SessionController extends Controller
             // 결과 JSON 응답 (접속된 사용자 정보)
             $code = $request->session()->get('code');
             try {
-                $result = DB::select("SELECT id, nickname FROM members WHERE code=$code");
-                $id = $result[0]->id;
-                $nickname = $result[0]->nickname;
+                $result = Member::where('code', $code)
+                ->get(['id', 'nickname'])
+                ->first();
+                $id = $result->id;
+                $nickname = $result->nickname;
             }catch(Exception $e){
                 return response()->json(["message" => false, "error" => $e->getMessage()]);
             }

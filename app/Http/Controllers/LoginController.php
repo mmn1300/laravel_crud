@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Member;
 use Exception;
 
 class LoginController extends Controller
@@ -13,13 +14,13 @@ class LoginController extends Controller
         $id = $request->input('id');
 
         // DB 질의 (id가 DB에 존재하는지 검사)
-        $result = DB::select("SELECT 1 FROM members WHERE id='$id'");
+        $result = Member::where('id', $id)->exists(); // 부울형 리턴
 
         // 결과 JSON 응답
-        if($result == null){
-            return response()->json(['message' => false]);
-        }else{
+        if($result){
             return response()->json(['message' => true]);
+        }else{
+            return response()->json(['message' => false]);
         }
     }
 
@@ -27,13 +28,15 @@ class LoginController extends Controller
         // DB 질의 (id,pw 일치 검사)
         $id = $request->input('id');
         $pw = $request->input('pw');
-        $result = DB::select("SELECT 1 FROM members WHERE id='$id' and password='$pw'");
+        $result = Member::where('id', $id)
+        ->where('password', $pw)
+        ->exists();
 
         // 결과 JSON 응답
-        if($result == null){
-            return response()->json(['message' => false]);
-        }else{
+        if($result){
             return response()->json(['message' => true]);
+        }else{
+            return response()->json(['message' => false]);
         }
     }
 
@@ -41,7 +44,10 @@ class LoginController extends Controller
         $id = $_POST['id'];
         try{
             // 세션 생성
-            $code = DB::select("SELECT distinct code From members WHERE id='$id'")[0]->code;
+            $code = Member::where('id', $id)
+            ->get(['code'])
+            ->first()
+            ->code;
             $request->session()->put('id', $id);
             $request->session()->put('code', $code);
         }

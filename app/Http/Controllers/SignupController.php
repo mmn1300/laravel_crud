@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Member;
 use Exception;
 
 class SignupController extends Controller
@@ -21,11 +22,11 @@ class SignupController extends Controller
     
         try{
             // DB 질의 (가장 마지막 회원 코드 조회)
-            $code = DB::select("SELECT code FROM members ORDER BY code desc LIMIT 1");
+            $code = Member::orderBy('code', 'desc')->first();
             if($code == null){
                 $num = 1;
             }else{
-                $num = $code[0]->code + 1;
+                $num = $code->code + 1;
             }
             $id = $request->input('id');
             $pw = $request->input('pw');
@@ -36,7 +37,16 @@ class SignupController extends Controller
             $today = date("Y-m-d H:i:s");
     
             // 데이터 삽입
-            DB::insert("INSERT INTO members VALUES ($num, '$id', '$pw', '$name', '$email', '$phone', '$today', 1)");
+            Member::insert([
+                'code' => $num,
+                'id' => $id,
+                'password' => $pw,
+                'nickname' => $name,
+                'email' => $email,
+                'phone_number' => $phone,
+                'regist_day' => $today,
+                'level' => 1
+            ]);
 
         }catch(Exception $e){
             return response()->json([

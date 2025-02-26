@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\ViewController;
+use App\Http\Controllers\BoardsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,17 +34,14 @@ Route::get('/login/signup', [ViewController::class, 'signup'])
 ->name('signup'); 
 
 // index -> 게시판
-Route::get('/board', [ViewController::class, 'board'])
+Route::get('/board', [BoardsController::class, 'index'])
 ->name('board'); 
 
 // index -> 게시판 -> 게시글 쓰기
-Route::get('/post/write', [ViewController::class, 'writePost']); 
+Route::get('/post/write', [BoardsController::class, 'create']); 
 
-// index -> 게시판 -> 게시글 읽기
-Route::get('/post/read', [ViewController::class, 'readPost']); 
-
-// index -> 게시판 -> 게시글 쓰기 -> 게시글 수정
-Route::get('/post/update/{postNum}', [ViewController::class, 'updatePost'])
+// index -> 게시판 -> 게시글 쓰기 -> 게시글 수정(view)
+Route::get('/post/update/{postNum}', [BoardsController::class, 'edit'])
 ->where('postNum', '[0-9]+');
 
 /////////////////////////////////////////////////////////////////////////
@@ -71,16 +69,16 @@ Route::post('/signup/id', [LoginController::class, 'checkId']);
 // index -> 로그인 -> 회원가입 -> 계정 생성
 Route::post('/signup', [SignupController::class, 'signup']);
 
-// index -> 게시판 -> 게시글 읽어오기
+// index -> 게시판 -> 게시글 목록 읽어오기
 Route::get('/post/list/{page?}', [BoardController::class, 'loadPosts'])
 ->where('page', '[0-9]+');
 
 // index -> 게시판 -> 게시글 쓰기 -> 글쓰기
-Route::post('/post/write', [BoardController::class, 'writePost'])
+Route::post('/post/write', [BoardsController::class, 'store'])
 ->name('write');
 
 // index -> 게시판 -> 게시글 읽기
-Route::get('/post/read/{postNum}', [BoardController::class, 'readPost'])
+Route::get('/post/read/{postNum}', [BoardsController::class, 'show'])
 ->where('postNum', '[0-9]+');
 
 // index -> 게시판 -> 게시글 읽기-> 파일 존재 여부 확인
@@ -92,8 +90,8 @@ Route::get('/post/download/{postNum}', [FileController::class, 'download'])
 ->where('postNum', '[0-9]+');
 
 // index -> 게시판 -> 게시글 읽기 -> 게시글 수정(view) -> 게시글 수정(model)
-Route::put('/post/update', [BoardController::class, 'updatePost'])
+Route::put('/post/update', [BoardsController::class, 'update'])
 ->name('update');
 
 // index -> 게시판 -> 게시글 읽기 -> 게시글 삭제
-Route::delete('/post/delete', [BoardController::class, 'deletePost']);
+Route::delete('/post/delete', [BoardsController::class, 'destroy']);
